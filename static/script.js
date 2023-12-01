@@ -1,11 +1,12 @@
 
-function send(username, message, key) {
+function send(username, message, key, time) {
   fetch("/send", {
     method: "POST",
     body: JSON.stringify({
       username: username,
       text: message,
-      key: key
+      key: key,
+      time: time
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8"
@@ -17,21 +18,19 @@ function send(username, message, key) {
 
 async function submit() {
 	let submission = document.getElementById('submitBox').value 
+	const resetStatus = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			document.getElementById('messageSentStatus').innerText = ""
+		}, 1200)
+	})
+
+	await send('boykissinator 9000', submission, 'placeholder key', Date.now())
+		
+	// clears message box
+	document.getElementById('submitBox').value = ""
 	
-	await send('boykissinator 9000', submission, 'placeholder key')
-	alert(`Message (${submission}) sent!`)
+	document.getElementById('messageSentStatus').innerText = "Message Sent!"
+	resetStatus
+
 }
 
-
-//recieving messages
-const socket = new Websocket('wss://10.44.151.11:4322')
-
-socket.onopen = function(e) {
-	alert('Connection to server established.')
-}
-
-socket.onmessage = function(event) {
-	console.log(event)
-	console.log("---------")
-	console.log(event.data)
-}

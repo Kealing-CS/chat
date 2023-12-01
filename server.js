@@ -4,15 +4,11 @@ const path = require("path")
 const fs = require('fs');
 const sanitizeHtml = require('sanitize-html');
 const date = require('date-and-time');
-const expressWs = require('express-ws')(app);
 
 const app = express();
 const port = 4321;
 
-const wsServer = new ws.Server({ noServer: true });
-
-
-fs.writeFile('./assets/messages.txt', "{}", { flag: 'wx' }, function (err) {
+fs.writeFile('./assets/messages.txt', "", { flag: 'wx' }, function (err) {
     if (err) { console.log("messages.txt already exists") } else { console.log("messages.txt created") };
 });
 
@@ -39,21 +35,24 @@ app.get("/assets/:assetName", function(req, res) {
     res.sendFile(path.join(__dirname, `/assets/${req.params["assetName"]}`))
 })
 
+app.get("/messages", function(req, res) {
+	res.sendFile(path.join(__dirname, 'assets/messages.txt'))
+});
+
 app.post("/send", function(req, res) {
 	console.log(req.body)
 
-	let now = new Date();
-	let time = date.format(now, 'YYYY/MM/DD HH:mm:ss');
-
+	let time = sanitizeHtml(req.body.time, {disallowedTagsMode: 'escape'})
 	let username = sanitizeHtml(req.body.username, {disallowedTagsMode: 'escape'})
 	let message = sanitizeHtml(req.body.text, {disallowedTagsMode: 'escape'})
+	console.log(time)
 	console.log(username)
 	console.log(message)
 	console.log("")
 
 	let data = fs.readFileSync(path.join(__dirname, '/assets/messages.txt'))
 	let fd = fs.openSync(path.join(__dirname, '/assets/messages.txt'), 'w+')
-	let insert = Buffer.from(`Sent by ${username} (${time})\n${message}\n\n`)
+	let insert = Buffer.from(`{username: '${username}' time: '${time}' message: '${message}'}\n`)
 	fs.writeSync(fd, insert, 0, insert.length, 0)
 	fs.writeSync(fd, data, 0, data.length, insert.length)
 	fs.close(fd, (err) => {
