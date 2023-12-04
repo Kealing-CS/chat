@@ -34,3 +34,35 @@ async function submit() {
 
 }
 
+let messages = ""
+
+function fetchNewMessages() {
+	let localUpdate = "skibidi"
+	let messages = fetch("/messages", { method: "GET" })
+	console.log("new messages fetched")
+}
+
+
+fetchNewMessages()
+
+const updater = setInterval(() => {
+	
+
+	setTimeout(() => {
+	let lastUpdate = fetch("/recent", {
+		method: "GET"
+	})
+
+	if ( lastUpdate == localUpdate ) {
+	} else { 
+		fetchNewMessages()
+	}
+
+	let localUpdate = lastUpdate
+	}, 10)
+}, 50)
+
+let localUpdate
+console.log("uifhaesvdlkhzvbfi")
+
+setTimeout(updater, 50)

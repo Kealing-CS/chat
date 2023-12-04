@@ -11,6 +11,9 @@ const port = 4321;
 fs.writeFile('./assets/messages.txt', "", { flag: 'wx' }, function (err) {
     if (err) { console.log("messages.txt already exists") } else { console.log("messages.txt created") };
 });
+fs.writeFile('./assets/recent.txt', "", { flag: 'wx' }, function (err) {
+    if (err) { console.log("recent.txt already exists") } else { console.log("recent.txt created") };
+});
 
 app.use(cors({
     origin: '*',
@@ -39,6 +42,10 @@ app.get("/messages", function(req, res) {
 	res.sendFile(path.join(__dirname, 'assets/messages.txt'))
 });
 
+app.get("/recent", function(req, res) {
+	res.sendFile(path.join(__dirname, 'assets/recent.txt'))
+})
+
 app.post("/send", function(req, res) {
 	console.log(req.body)
 
@@ -58,8 +65,10 @@ app.post("/send", function(req, res) {
 	fs.close(fd, (err) => {
 		if (err) throw err;
 	});
-
 	console.log('message written to text file')
+	fs.writeFileSync('assets/recent.txt', time, 'utf8')
+	console.log(`Time (${time}) written to recent.txt`)
+
 })
 
 // Working fetch
