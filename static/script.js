@@ -1,4 +1,4 @@
-
+let localUpdate = 1
 function send(username, message, key, time) {
   fetch("/send", {
     method: "POST",
@@ -37,7 +37,6 @@ async function submit() {
 let messages = ""
 
 function fetchNewMessages() {
-	let localUpdate = "skibidi"
 	let messages = fetch("/messages", { method: "GET" })
 	console.log("new messages fetched")
 }
@@ -62,7 +61,7 @@ const updater = setInterval(() => {
 	}, 10)
 }, 50)
 
-let localUpdate
+
 console.log("uifhaesvdlkhzvbfi")
 
 setTimeout(updater, 50)
