@@ -1,4 +1,3 @@
-let localUpdate = 1
 function send(username, message, key, time) {
   fetch("/send", {
     method: "POST",
@@ -37,30 +36,16 @@ async function submit() {
 let messages = ""
 
 function fetchNewMessages() {
-	let messages = fetch("/messages", { method: "GET" })
-	console.log("new messages fetched")
+	let messages = await fetch("/messages", { method: "GET" })
+	//console.log("new messages fetched")
 }
 
 
 fetchNewMessages()
 
 const updater = setInterval(() => {
-	
-
-	setTimeout(() => {
-	let lastUpdate = fetch("/recent", {
-		method: "GET"
-	})
-
-	if ( lastUpdate == localUpdate ) {
-	} else { 
-		fetchNewMessages()
-	}
-
-	let localUpdate = lastUpdate
-	}, 10)
-}, 50)
-
+	fetchNewMessages()
+}, 78)
 
 console.log("uifhaesvdlkhzvbfi")
 
