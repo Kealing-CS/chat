@@ -20,6 +20,7 @@ app.use(cors({
     optionsSuccessStatus: 200
 }));
 app.use(express.json())
+app.use(express.text())
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "/index.html"));
@@ -39,9 +40,11 @@ app.get("/assets/:assetName", function(req, res) {
 })
 
 app.get("/messages", function(req, res) {
-	let messages = fs.readFileSync('assets/messages.txt')
-	res.set('Content-Type', 'text/html');
-	res.send(messages)
+	let messages = fs.readFileSync('assets/messages.txt', 'utf8')
+	res.set({'Content-Type': 'text/html'});
+	// console.log(messages)
+	res.body = messages
+	res.send()
 });
 
 app.post("/send", function(req, res) {

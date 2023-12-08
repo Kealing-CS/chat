@@ -35,7 +35,7 @@ async function submit() {
 
 let messages = ""
 
-function fetchNewMessages() {
+async function fetchNewMessages() {
 	let messages = await fetch("/messages", { method: "GET" })
 	//console.log("new messages fetched")
 }
