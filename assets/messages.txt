@@ -1,8 +1,0 @@
-{username: 'boykissinator 9000' time: '1701706780864' message: 'fdas'}
-{username: 'boykissinator 9000' time: '1701706739658' message: 'afds'}
-{username: 'boykissinator 9000' time: '1701706225084' message: 'afsd'}
-{username: 'boykissinator 9000' time: '1701706187594' message: 'fdas'}
-{username: 'boykissinator 9000' time: '1701705778439' message: '"text'}
-{username: 'boykissinator 9000' time: '1701705766639' message: '"'}
-{username: 'boykissinator 9000' time: '1701705760391' message: ''fdas'}
-{username: 'boykissinator 9000' time: '1701705740441' message: 'n fas d;,vmfnr,c '}
